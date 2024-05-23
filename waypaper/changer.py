@@ -37,6 +37,7 @@ def change_wallpaper(image_path, cf, monitor, txt):
             if "swaybg" in cf.installed_backends:
                 try:
                     subprocess.Popen(["killall", "swaybg"])
+                    subprocess.Popen(["killall", "hyprpaper"])
                     time.sleep(0.005)
                 except Exception as e:
                     print(f"{txt.err_kill} {e}")
