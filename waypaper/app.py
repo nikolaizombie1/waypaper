@@ -64,6 +64,7 @@ class App(Gtk.Window):
         self.selected_index = 0
         self.highlighted_image_row = 0
         self.init_ui()
+        self.connect("size-allocate", self.on_size_allocate)
 
         # Start the image processing in a separate thread:
         threading.Thread(target=self.process_images).start()
@@ -507,6 +508,14 @@ class App(Gtk.Window):
         """On clicking exit button, exit"""
         Gtk.main_quit()
 
+    def on_size_allocate(self, widget, allocation) -> None:
+        try:
+            width = allocation.width
+            number_of_columns = width // int(max(map(lambda x: x.get_width(), self.thumbnails))) + 1
+            self.cf.number_of_columns = number_of_columns
+        except Exception:
+            pass
+        
 
     def set_random_wallpaper(self):
         """Choose a random image and set it as the wallpaper"""
